@@ -44,7 +44,9 @@ export class LoginComponent {
 ```
 # Use of contentType
 If pdf : "application/pdf"
+
 If apk : "'application/vnd.android.package-archive'
+
 else check other file details
 
 # Use of downlaodAndInstall Object parameter in JSON
