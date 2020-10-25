@@ -50,7 +50,8 @@ else check other file details
 # Use of downlaodAndInstall Object parameter in JSON
 
 If **downloadAndInstall** = true (It means you need install the package which is possible only when downlaoded file is apk)
-else always send **downloadAndInstall** = false 
+
+Else always send **downloadAndInstall** = false 
 
 ## Platform: Web/PWA
 
