@@ -31,7 +31,7 @@ export class LoginComponent {
           url : appUrl,
           folderName : 'folderName',
           contentType: 'application/vnd.android.package-archive',
-          fileName :  'course5_tpix.apk',
+          fileName :  'randomName.apk',
           downloadAndInstall :  true
         };
         const pluginValue = Plugins.DownloadPlugin.download(details).then(() => {
