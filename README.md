@@ -1,7 +1,11 @@
 # Capacitor-Download-Plugin
-A download plugin which help to download any file from server using direct URL
+A Download and Install apk using direct link on the server
 
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/moberwasserlechner)
+OR
+
+A Download anny file from the server by making changes defined below for files like pdf, jpg , mp4 and more
+
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/)
 
 
 ## Installation
