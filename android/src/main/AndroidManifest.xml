@@ -1,0 +1,17 @@
+
+  <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="com.knight.plugin.download.capacitordownloadplugin">
+    <application>
+      <provider
+          android:name="com.knight.plugin.download.DownloadFileProvider"
+          android:authorities="${applicationId}.capacitordownloadplugin.fileprovider"
+          android:exported="false"
+          android:grantUriPermissions="true">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/file_path" />
+      </provider>
+    </application>
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+  </manifest>
+  
