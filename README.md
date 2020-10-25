@@ -1,7 +1,5 @@
-# capacitor-download-plugin
-A download any file from server capacitor plugin
-
-# Capacitor plugin for file sharing
+# Capacitor-Download-Plugin
+A download plugin which help to download any file from server using direct URL
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/moberwasserlechner)
 
