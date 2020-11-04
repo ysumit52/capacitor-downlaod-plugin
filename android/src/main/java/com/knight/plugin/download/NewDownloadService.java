@@ -1,18 +1,12 @@
 package com.knight.plugin.download;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.util.Log;
-
 import com.getcapacitor.PluginCall;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -39,7 +33,7 @@ class NewDownloadService extends AsyncTask<String, String, File> {
     private static final String PARAM_FOLDER_NAME = "folderName";
     private static final String PARAM_URL = "url";
     private JSONObject _jsonObject;
-
+    private String _file_path;
     public NewDownloadService(ProcessFinish processFinish, Context context, PluginCall call, JSONObject jsonObject){
         this._processFinish = processFinish;
         this._context = context;
@@ -84,6 +78,7 @@ class NewDownloadService extends AsyncTask<String, String, File> {
             InputStream input = new BufferedInputStream(url.openStream());
 
             myExternalFile = new File(_context.getExternalFilesDir(_pathFolder), _file_name);
+            _file_path = myExternalFile.getParent();
             FileOutputStream output = new FileOutputStream(myExternalFile);
 
             byte[] data = new byte[1024];
@@ -141,7 +136,7 @@ class NewDownloadService extends AsyncTask<String, String, File> {
                 installService.new_install(file_url, _jsonObject);
             }else{
                 Log.e("LenovoGAO Message :" , "Downloaded and installed");
-                _processFinish.processFinished(true,"Done", file_name);
+                _processFinish.processFinished(true,"Done", _file_path);
             }
 
         }

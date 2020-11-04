@@ -48,9 +48,9 @@ public class DownloadPlugin extends Plugin implements ProcessFinish {
         }
 
         String contentType = ConfigUtils.getCallParam(String.class, _call, PARAM_CONTENT_TYPE);
-        if (contentType == null || contentType.length() == 0) {
-            returnIfError("Content Type parameter not present");
-        }
+//        if (contentType == null || contentType.length() == 0) {
+//            returnIfError("Content Type parameter not present");
+//        }
 
         String url = ConfigUtils.getCallParam(String.class, _call, PARAM_URL);
         if (_pathFolder == null || _pathFolder.length() == 0) {
@@ -78,6 +78,7 @@ public class DownloadPlugin extends Plugin implements ProcessFinish {
     public void processFinished(Boolean success, String output, String file_name) {
         jsObject.put("Message", output);
         jsObject.put("Success", success);
+        jsObject.put("Data", file_name);
         _call.success(jsObject);
     }
 

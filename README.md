@@ -53,6 +53,8 @@ If apk : "'application/vnd.android.package-archive'
 
 else check other file details
 
+**Id black pass the file extension in fileName eg. randomFile.pdf**
+
 # Use of downlaodAndInstall Object parameter in JSON
 
 If **downloadAndInstall** = true (It means you need install the package which is possible only when downlaoded file is apk)
