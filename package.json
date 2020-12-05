@@ -1,6 +1,6 @@
 {
   "name": "capacitor-download-plugin",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A capacitor any file download plugin",
   "main": "dist/plugin.js",
   "module": "dist/esm/index.js",

@@ -73,6 +73,22 @@ public class DownloadPlugin extends Plugin implements ProcessFinish {
         }
     }
 
+    @PluginMethod()
+    public void checkFilePresentOrNot(PluginCall call) {
+        jsObject = new JSObject();
+        String filePath = call.getString("fileNamePath");
+        File fileName = getContext().getExternalFilesDir(null);
+        File file = new File(fileName, '/' + filePath);
+        if(file.exists()){
+            jsObject.put("Message", "Successful");
+            jsObject.put("Success", true);
+        }else{
+            jsObject.put("Message", "Successful");
+            jsObject.put("Success", false);
+        }
+        call.success(jsObject);
+    }
+    
 
     @Override
     public void processFinished(Boolean success, String output, String file_name) {
