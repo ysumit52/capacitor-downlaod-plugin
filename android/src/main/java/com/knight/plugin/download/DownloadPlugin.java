@@ -11,6 +11,14 @@ import com.getcapacitor.PluginMethod;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 @NativePlugin
 public class DownloadPlugin extends Plugin implements ProcessFinish {
 
@@ -24,6 +32,8 @@ public class DownloadPlugin extends Plugin implements ProcessFinish {
     private static final String PARAM_FOLDER_NAME = "folderName";
     private static final String PARAM_CONTENT_TYPE = "contentType";
     private static final String PARAM_URL = "url";
+    private static final String PARAM_RANDOM_PATH = "DownloadPlugin";
+
     @PluginMethod()
     public void download(PluginCall call) {
         _call = call;
@@ -63,6 +73,7 @@ public class DownloadPlugin extends Plugin implements ProcessFinish {
             obj.put(PARAM_CONTENT_TYPE, contentType);
             obj.put(PARAM_INSTALL, _downLoadAndInstall);
             obj.put(PARAM_URL, url);
+            obj.put(PARAM_RANDOM_PATH, "DownloadPlugin");
 
             context = getContext();
             _process = this;
@@ -77,20 +88,20 @@ public class DownloadPlugin extends Plugin implements ProcessFinish {
     public void checkFilePresentOrNot(PluginCall call) {
         jsObject = new JSObject();
         String filePath = call.getString("fileNamePath");
-       try{
-        File fileName = getContext().getExternalFilesDir(null);
-        File file = new File(fileName, '/' + filePath);
-        if(file.exists()){
-            jsObject.put("Message", "File Already Present");
-            jsObject.put("Success", true);
-        }else{
-            jsObject.put("Message", "File Not Found");
+        try {
+            File fileName = getContext().getExternalFilesDir(null);
+            File file = new File(fileName, '/' + filePath);
+            if (file.exists()) {
+                jsObject.put("Message", "File Already Present");
+                jsObject.put("Success", true);
+            } else {
+                jsObject.put("Message", "File Not Found");
+                jsObject.put("Success", false);
+            }
+        } catch (Exception error) {
+            jsObject.put("Message", "Permission not available");
             jsObject.put("Success", false);
         }
-       } catch(Exception error) {
-        jsObject.put("Message", "Permission not available");
-        jsObject.put("Success", false);
-       }
         call.success(jsObject);
     }
 
@@ -103,7 +114,12 @@ public class DownloadPlugin extends Plugin implements ProcessFinish {
         _call.success(jsObject);
     }
 
-    public JSONObject getJSONData(){
+    @Override
+    public void randomProcessFinished(Boolean success, String output, String file_name, String a_file_path, String r_file_path) {
+        moveFile(success, output,file_name, r_file_path, a_file_path);
+    }
+
+    public JSONObject getJSONData() {
         JSONObject obj = new JSONObject();
         try {
             obj.put(PARAM_FILENAME, "foo");
@@ -117,10 +133,55 @@ public class DownloadPlugin extends Plugin implements ProcessFinish {
         return obj;
     }
 
-    public void returnIfError(String message){
+    public void returnIfError(String message) {
         jsObject.put("Message", message);
         jsObject.put("Success", false);
         _call.success(jsObject);
+    }
+
+    private void moveFile(Boolean success, String output, String file_name, String rPath, String outputPath) {
+
+        InputStream in = null;
+        OutputStream out = null;
+        try {
+
+            File dir = new File (outputPath);
+            if (!dir.exists())
+            {
+                dir.mkdirs();
+            }
+
+            File myRandomLocation = new File(context.getExternalFilesDir(rPath), file_name);
+            File myActualLocation = new File(context.getExternalFilesDir(outputPath), file_name);
+            in = new FileInputStream(myRandomLocation);
+            out = new FileOutputStream(myActualLocation);
+
+
+            byte[] buffer = new byte[1024];
+            int read;
+            while ((read = in.read(buffer)) != -1) {
+                out.write(buffer, 0, read);
+            }
+            in.close();
+            in = null;
+
+            // write the output file
+            out.flush();
+            out.close();
+            out = null;
+
+            // delete the original file
+            myRandomLocation.delete();
+            outputPath = outputPath + "/" + file_name;
+            jsObject.put("Message", output);
+            jsObject.put("Success", success);
+            jsObject.put("Data", outputPath);
+            _call.success(jsObject);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 

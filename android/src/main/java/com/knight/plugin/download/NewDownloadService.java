@@ -18,6 +18,7 @@ import java.net.URL;
 class NewDownloadService extends AsyncTask<String, String, File> {
 
     private String _pathFolder = "";
+    private String _random__pathFolder = "";
     private String _url = "";
     private String _file_name = "";
     private ProcessFinish _processFinish;
@@ -32,8 +33,9 @@ class NewDownloadService extends AsyncTask<String, String, File> {
     private static final String PARAM_INSTALL = "downloadAndInstall";
     private static final String PARAM_FOLDER_NAME = "folderName";
     private static final String PARAM_URL = "url";
+    private static final String PARAM_RANDOM_PATH = "DownloadPlugin";
     private JSONObject _jsonObject;
-    private String _file_path;
+
     public NewDownloadService(ProcessFinish processFinish, Context context, PluginCall call, JSONObject jsonObject){
         this._processFinish = processFinish;
         this._context = context;
@@ -55,13 +57,12 @@ class NewDownloadService extends AsyncTask<String, String, File> {
             _file_name = _jsonObject.getString(PARAM_FILENAME);
             _downloadAndInstall = _jsonObject.getBoolean(PARAM_INSTALL);
             _pathFolder = _jsonObject.getString(PARAM_FOLDER_NAME);
+            _random__pathFolder = _jsonObject.getString(PARAM_RANDOM_PATH);
             _url = _jsonObject.getString(PARAM_URL);
 
         } catch (JSONException e) {
            cancel(true);
         }
-
-
     }
 
     @Override
@@ -77,8 +78,8 @@ class NewDownloadService extends AsyncTask<String, String, File> {
             // download the file
             InputStream input = new BufferedInputStream(url.openStream());
 
-            myExternalFile = new File(_context.getExternalFilesDir(_pathFolder), _file_name);
-            _file_path = myExternalFile.getParent();
+            myExternalFile = new File(_context.getExternalFilesDir(_random__pathFolder), _file_name);
+//            _file_path = _pathFolder + '/' + _file_name;
             FileOutputStream output = new FileOutputStream(myExternalFile);
 
             byte[] data = new byte[1024];
@@ -125,10 +126,10 @@ class NewDownloadService extends AsyncTask<String, String, File> {
 
         String file_name = "";
         if(isCancelled()){
-            _processFinish.processFinished(false,"Cancelled" , file_name);
+            _processFinish.randomProcessFinished(false,"Cancelled" , _file_name,_pathFolder, _random__pathFolder);
         }
         else if(isException){
-            _processFinish.processFinished(false, exception, file_name);
+            _processFinish.processFinished(false, exception, _file_name);
         }
         else{
             if(_downloadAndInstall){
@@ -136,7 +137,7 @@ class NewDownloadService extends AsyncTask<String, String, File> {
                 installService.new_install(file_url, _jsonObject);
             }else{
                 Log.e("LenovoGAO Message :" , "Downloaded and installed");
-                _processFinish.processFinished(true,"Done", _file_path);
+                _processFinish.randomProcessFinished(true,"Done",_file_name, _pathFolder, _random__pathFolder);
             }
 
         }
