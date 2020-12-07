@@ -77,6 +77,7 @@ public class DownloadPlugin extends Plugin implements ProcessFinish {
     public void checkFilePresentOrNot(PluginCall call) {
         jsObject = new JSObject();
         String filePath = call.getString("fileNamePath");
+       try{
         File fileName = getContext().getExternalFilesDir(null);
         File file = new File(fileName, '/' + filePath);
         if(file.exists()){
@@ -86,6 +87,10 @@ public class DownloadPlugin extends Plugin implements ProcessFinish {
             jsObject.put("Message", "File Not Found");
             jsObject.put("Success", false);
         }
+       } catch(Exception error) {
+        jsObject.put("Message", "Permission not available");
+        jsObject.put("Success", false);
+       }
         call.success(jsObject);
     }
 
