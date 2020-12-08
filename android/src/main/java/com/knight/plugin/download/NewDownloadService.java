@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import com.getcapacitor.PluginCall;
+import com.knight.plugin.download.capacitordownloadplugin.R;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedInputStream;
@@ -47,7 +49,7 @@ class NewDownloadService extends AsyncTask<String, String, File> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        pd = new ProgressDialog(_context);
+        pd = new ProgressDialog(_context, R.style.MyAlertDialogStyle);
         pd.setTitle("Processing...");
         pd.setMessage("Please wait.");
         pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
