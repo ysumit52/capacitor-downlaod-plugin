@@ -105,7 +105,7 @@ import com.knight.plugin.download.DownloadPlugin;
 
 MIT. 
 
-## BYTEOWLS Software & Consulting
+## KnightCrawler Software & Consulting
 
 This plugin is powered by **KnightCrawler**
 
