@@ -1,9 +1,9 @@
 # Capacitor-Download-Plugin
-A Download and Install apk using direct link on the server
+Download and Install apk using direct link on the server
 
 OR
 
-A Download anny file from the server by making changes defined below for files like pdf, jpg , mp4 and more
+Download any file from the server by making changes defined below for files like pdf, jpg , mp4 and more
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/)
 
@@ -57,9 +57,9 @@ else check other file details
 
 # Use of downlaodAndInstall Object parameter in JSON
 
-If **downloadAndInstall** = true (It means you need install the package which is possible only when downlaoded file is apk)
+If **downloadAndInstall** = true (It will ask a pop up to install the apk(only apk) directly)
 
-Else always send **downloadAndInstall** = false 
+Else only want to download the file then pass **downloadAndInstall** = false 
 
 ## Platform: Web/PWA
 
